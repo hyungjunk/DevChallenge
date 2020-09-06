@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import "./App.css";
+import DropZone from "./DropZone";
+// import FileInput from './FileInput';
 
 function App() {
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="root">
+      <p className="title">React Drag and drop image upload</p>
+      <div className="content">
+        <DropZone
+          selectedFiles={selectedFiles}
+          setSelectedFiles={setSelectedFiles}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
+        />
+        {/* <FileInput
+          value={[]}
+          selectedFiles={selectedFiles}
+          setSelectedFiles={setSelectedFiles}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
+        /> */}
+      </div>
     </div>
   );
 }
-
 export default App;
