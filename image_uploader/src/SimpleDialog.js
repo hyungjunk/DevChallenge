@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
+import {Button, LinearProgress} from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -32,7 +31,8 @@ export function SimpleDialog(props) {
             </ListItem>
           )
         })}
-
+        {/* Progress Bar, 100% 되면 알려주고 닫기 */}
+        <LinearProgress variant="determinate" value={props.percent} />
         <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
           <ListItemText primary="Add account" />
         </ListItem>

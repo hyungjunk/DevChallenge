@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Im from './image.svg';
-import { Button } from '@material-ui/core';
+import { Button, LinearProgress  } from '@material-ui/core';
 import { SimpleDialog } from './SimpleDialog';
 import axios, { post } from 'axios';
 
@@ -8,6 +8,7 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
 
   const containerRef = useRef();
   const [open, setOpen] = useState(false);
+  const [percent, setPercent] = useState(0);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -104,13 +105,23 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
     //  }
 
 
-    // 파일별 업로드
+    // 파일별 업로드 및 progress bar showing
     const resp = await post('http://localhost:8000', formData, {
-      'content-type': 'multipart/form-data'
+      'content-type': 'multipart/form-data',
+      onUploadProgress: event => {
+        // 전체 파일 크기 확인
+        if (event.total) {
+          let percentCompleted = Math.round((event.loaded * 100) / event.total);
+          setPercent(percentCompleted);
+          // Modal 안에 Progress bar 넣기
+          // document.getElementById('output').innerHTML = percentCompleted;
+        }
+      }
     });
     console.log(resp);
 
     // 파일별 Progress바 보여주기
+
 
     //  Modal 닫기
 
@@ -158,12 +169,12 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
               </Button>
             </label>
           </p>
-          <p>
+          <div style={{textAlign: 'center'}}>
             <Button color="primary" variant="contained" onClick={onUpload}>
               Upload
             </Button>
-            <SimpleDialog open={open} onClose={handleClose} files={selectedFiles} />
-          </p>
+            <SimpleDialog open={open} onClose={handleClose} percent={percent} files={selectedFiles} />
+          </div>
         </div>
       </div>
     </div>
