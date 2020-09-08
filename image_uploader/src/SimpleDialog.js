@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import {Button, LinearProgress} from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { blue } from '@material-ui/core/colors';
+
 
 export function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
@@ -21,7 +23,11 @@ export function SimpleDialog(props) {
   };
 
   return (
-    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" 
+    open={open} 
+    fullWidth={true}
+    maxWidth={'sm'}
+    >
       <DialogTitle id="simple-dialog-title">Uploading...</DialogTitle>
       <List>
         {props.files.map((file) => {
@@ -31,11 +37,17 @@ export function SimpleDialog(props) {
             </ListItem>
           )
         })}
+
         {/* Progress Bar, 100% 되면 알려주고 닫기 */}
-        <LinearProgress variant="determinate" value={props.percent} />
-        <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
-          <ListItemText primary="Add account" />
-        </ListItem>
+        <Box display="flex" alignItems="center">
+        <Box minWidth={10}></Box>
+        <Box width="90%" mr={1}>
+          <LinearProgress variant="determinate" value={props.percent} />
+        </Box>
+        <Box minWidth={20}>
+          <Typography variant="body2" color="textSecondary">{`${Math.round(props.percent)}%`}</Typography>
+        </Box>
+      </Box>
       </List>
     </Dialog >
   );

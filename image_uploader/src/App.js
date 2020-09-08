@@ -6,26 +6,28 @@ import DropZone from "./DropZone";
 function App() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
-  return (
-    <div className="root">
-      <p className="title">React Drag and drop image upload</p>
-      <div className="content">
-        <DropZone
-          selectedFiles={selectedFiles}
-          setSelectedFiles={setSelectedFiles}
-          errorMessage={errorMessage}
-          setErrorMessage={setErrorMessage}
-        />
-        {/* <FileInput
-          value={[]}
-          selectedFiles={selectedFiles}
-          setSelectedFiles={setSelectedFiles}
-          errorMessage={errorMessage}
-          setErrorMessage={setErrorMessage}
-        /> */}
+  if (!uploadSuccess){
+    return (
+      <div className="root">
+        <p className="title">React Drag and drop image upload</p>
+        <div className="content">
+          <DropZone
+            selectedFiles={selectedFiles}
+            setSelectedFiles={setSelectedFiles}
+            errorMessage={errorMessage}
+            setErrorMessage={setErrorMessage}
+            setUploadSuccess={setUploadSuccess}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <p>upload done!</p>
+    )
+  }
+  
 }
 export default App;
