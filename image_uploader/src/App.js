@@ -1,33 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./App.css";
 import DropZone from "./DropZone";
-// import FileInput from './FileInput';
+import axios from 'axios';
+import Preview from './Preview';
+
 
 function App() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [uploadSuccess, setUploadSuccess] = useState(false);
-
-  if (!uploadSuccess){
-    return (
-      <div className="root">
-        <p className="title">React Drag and drop image upload</p>
-        <div className="content">
-          <DropZone
-            selectedFiles={selectedFiles}
-            setSelectedFiles={setSelectedFiles}
-            errorMessage={errorMessage}
-            setErrorMessage={setErrorMessage}
-            setUploadSuccess={setUploadSuccess}
-          />
-        </div>
+  
+  return (
+    <div className="root">
+      {uploadSuccess === false? 
+      <>
+      <p className="title">React Drag and drop image upload</p>
+      <div className="content">
+        <DropZone
+          selectedFiles={selectedFiles}
+          setSelectedFiles={setSelectedFiles}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
+          setUploadSuccess={setUploadSuccess}
+        />
       </div>
-    );
-  } else {
-    return (
-      <p>upload done!</p>
-    )
-  }
+      </> :
+      <Preview/>}
+
+    </div>
+  )
   
 }
 export default App;

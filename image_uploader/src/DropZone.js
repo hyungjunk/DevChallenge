@@ -30,17 +30,14 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
 
   const dragOver = (e) => {
     e.preventDefault();
-    console.log('drag over');
   }
 
   const dragEnter = (e) => {
     e.preventDefault();
-    console.log('drag enter');
   }
 
   const dragLeave = (e) => {
     e.preventDefault();
-    console.log('drag leave');
   }
 
   const fileDrop = (e) => {
