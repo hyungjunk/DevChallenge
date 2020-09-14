@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Im from './image.svg';
-import { Button, LinearProgress  } from '@material-ui/core';
+import { Button, LinearProgress } from '@material-ui/core';
 import { SimpleDialog } from './SimpleDialog';
 import { post } from 'axios';
 
@@ -11,8 +11,8 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
   const [percent, setPercent] = useState(0);
   const [uploadFinished, setUploadFinished] = useState(false);
 
-  useEffect(()=> {
-    if (uploadFinished === true){
+  useEffect(() => {
+    if (uploadFinished === true) {
       setTimeout(() => {
         setOpen(false);
         setUploadSuccess(true);
@@ -42,12 +42,10 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
 
   const fileDrop = (e) => {
     e.preventDefault();
-    console.log('file drop');
     const files = e.dataTransfer.files;
     if (files.length) {
       handleFiles(files);
     }
-    console.log(files);
   }
 
   const handleFiles = files => {
@@ -100,7 +98,6 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
    */
 
     const formData = new FormData();
-    console.log(selectedFiles);
     formData.append('files[]', selectedFiles[0]);
     formData.append('files[]', selectedFiles[1]);
     // Display the key/value pairs
@@ -131,7 +128,6 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
     if (resp.status === 200) {
       setUploadFinished(true)
     }
-
     //  Modal 닫기
 
   }
@@ -178,12 +174,9 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
               </Button>
             </label>
           </p>
-          <div style={{textAlign: 'center'}}>
+          <div style={{ textAlign: 'center' }}>
             <Button color="primary" variant="contained" onClick={onUpload}>
               Upload
-            </Button>
-            <Button color="primary" variant="contained" onClick={()=>handleClickOpen()}>
-              open Modal
             </Button>
             <SimpleDialog open={open} onClose={handleClose} percent={percent} finished={uploadFinished} files={selectedFiles} />
           </div>
