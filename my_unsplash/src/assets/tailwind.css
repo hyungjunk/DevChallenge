@@ -1,0 +1,30 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer components {
+    .hash-tag {
+        @apply inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2;
+    }
+    .card-wrapper {
+        @apply bg-white rounded shadow border-2 p-6 w-64
+    }
+    .card-wrapper:hover {
+        @apply bg-blue-700;
+    }
+    .card-title {
+        @apply text-3xl font-bold mb-4 mt-0
+    }
+
+    .btn {
+        @apply font-bold py-2 px-4 rounded;
+      }
+      
+    .btn-blue {
+    @apply bg-blue-500 text-white;
+    }
+    
+    .btn-blue:hover {
+    @apply bg-blue-700;
+    }
+}
