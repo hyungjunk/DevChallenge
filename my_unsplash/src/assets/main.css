@@ -3583,6 +3583,18 @@ video {
   background-image: linear-gradient(to left, var(--gradient-color-stops));
 }
 
+.bg-logo {
+  background-image: url('/splash_logo.png');
+}
+
+.bg-sample {
+  background-image: url('/splash.png');
+}
+
+.bg-footer-texture {
+  background-image: url('/img/footer-texture.png');
+}
+
 .bg-gradient-to-tl {
   background-image: linear-gradient(to top left, var(--gradient-color-stops));
 }
@@ -21807,6 +21819,18 @@ video {
     background-image: linear-gradient(to left, var(--gradient-color-stops));
   }
 
+  .sm\:bg-logo {
+    background-image: url('/splash_logo.png');
+  }
+
+  .sm\:bg-sample {
+    background-image: url('/splash.png');
+  }
+
+  .sm\:bg-footer-texture {
+    background-image: url('/img/footer-texture.png');
+  }
+
   .sm\:bg-gradient-to-tl {
     background-image: linear-gradient(to top left, var(--gradient-color-stops));
   }
@@ -39999,6 +40023,18 @@ video {
 
   .md\:bg-gradient-to-l {
     background-image: linear-gradient(to left, var(--gradient-color-stops));
+  }
+
+  .md\:bg-logo {
+    background-image: url('/splash_logo.png');
+  }
+
+  .md\:bg-sample {
+    background-image: url('/splash.png');
+  }
+
+  .md\:bg-footer-texture {
+    background-image: url('/img/footer-texture.png');
   }
 
   .md\:bg-gradient-to-tl {
@@ -58195,6 +58231,18 @@ video {
     background-image: linear-gradient(to left, var(--gradient-color-stops));
   }
 
+  .lg\:bg-logo {
+    background-image: url('/splash_logo.png');
+  }
+
+  .lg\:bg-sample {
+    background-image: url('/splash.png');
+  }
+
+  .lg\:bg-footer-texture {
+    background-image: url('/img/footer-texture.png');
+  }
+
   .lg\:bg-gradient-to-tl {
     background-image: linear-gradient(to top left, var(--gradient-color-stops));
   }
@@ -76387,6 +76435,18 @@ video {
 
   .xl\:bg-gradient-to-l {
     background-image: linear-gradient(to left, var(--gradient-color-stops));
+  }
+
+  .xl\:bg-logo {
+    background-image: url('/splash_logo.png');
+  }
+
+  .xl\:bg-sample {
+    background-image: url('/splash.png');
+  }
+
+  .xl\:bg-footer-texture {
+    background-image: url('/img/footer-texture.png');
   }
 
   .xl\:bg-gradient-to-tl {
