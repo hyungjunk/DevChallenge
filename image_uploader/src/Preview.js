@@ -43,9 +43,9 @@ const Preview = () => {
     }, [])
     return (
         <div>
-            upload success 
+            <p>upload success</p>
             <img className="upload-img" src={`data:image;base64,${image}`}/>
-            <span onClick={()=>copyText(document.querySelector('.sample'))} className="sample">yoloworld</span>
+            <p onClick={()=>copyText(document.querySelector('.sample'))} className="sample">click me to copy the image</p>
         </div>
     )
 }

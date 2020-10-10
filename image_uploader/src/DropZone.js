@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Im from './image.svg';
-import { Button, LinearProgress } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import M from 'materialize-css/dist/js/materialize.min.js';
 import { SimpleDialog } from './SimpleDialog';
 import { post } from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessage, setUploadSuccess }) => {
 
   const containerRef = useRef();
+  const imgDropZoneRef = useRef();
   const [open, setOpen] = useState(false);
   const [percent, setPercent] = useState(0);
   const [uploadFinished, setUploadFinished] = useState(false);
@@ -33,15 +36,19 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
   }
 
   const dragEnter = (e) => {
+    imgDropZoneRef.current.style.background='green'
     e.preventDefault();
   }
 
   const dragLeave = (e) => {
+    imgDropZoneRef.current.style.background='white'
     e.preventDefault();
   }
 
   const fileDrop = (e) => {
+    imgDropZoneRef.current.style.background='white'
     e.preventDefault();
+
     const files = e.dataTransfer.files;
     if (files.length) {
       handleFiles(files);
@@ -52,16 +59,11 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
     for (let file of files) {
       if (validateFile(file)) {
         // add to an array so we can display the name of file
+        // console.log(file)
         setSelectedFiles(prevArray => [...prevArray, file]);
       } else {
-        // add a new property called invalid
-        file.invalid = true;
-
-        // add to the same array so we can display the name of the file
-        setSelectedFiles(prevArray => [...prevArray, file]);
-
         // set error message
-        setErrorMessage('File type not permitted');
+        M.toast({html: 'File type not permitted'})
       }
     }
   }
@@ -69,10 +71,8 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
   const validateFile = file => {
     const vaildTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/x-icon'];
     if (vaildTypes.indexOf(file.type) === -1) {
-      console.log('invalidated');
       return false;
     }
-    console.log('validated')
     return true;
   }
 
@@ -84,8 +84,13 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
     return parseFloat((size / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 
-  const fileType = (fileName) => {
-    return fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length) || fileName;
+  const getFileName = (fileFullName) => {
+    return fileFullName.substring(0, fileFullName.lastIndexOf('.'));
+  }
+
+
+  const getFileType = (fileFullName) => {
+    return fileFullName.substring(fileFullName.lastIndexOf('.') + 1, fileFullName.length) || fileFullName;
   }
 
 
@@ -94,21 +99,15 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
 
     /* 
     폼 생성 및 파일 containing 확인
-    파일 binary 업로드를 시켜야함 
+    파일 binary 업로드를 시켜야함
    */
 
     const formData = new FormData();
-    formData.append('files[]', selectedFiles[0]);
-    formData.append('files[]', selectedFiles[1]);
-    // Display the key/value pairs
-    //   for (var pair of formData.entries()) {
-    //     console.log(pair[0] + ', ' + pair[1]);
-    //   }
-    //   if (true) {
-    //     containerRef.current.style.display = 'none';
-    //     console.log(containerRef.current.style.display);
-    //  }
-
+    
+    selectedFiles.map(file => {
+      let newFileName = `${getFileName(file.name)}_${uuidv4()}.${getFileType(file.name)}`
+      formData.append('files[]', file, newFileName);
+    })
 
     // 파일별 업로드 및 progress bar showing
     const resp = await post('http://localhost:8000', formData, {
@@ -117,7 +116,6 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
         // 전체 파일 크기 확인
         if (event.total) {
           let percentCompleted = Math.round((event.loaded * 100) / event.total);
-          // console.log(percentCompleted);
           setPercent(percentCompleted);
           if (Number(percentCompleted) === 100) {
             setUploadFinished(true);
@@ -128,8 +126,12 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
     if (resp.status === 200) {
       setUploadFinished(true)
     }
-    //  Modal 닫기
+  }
 
+  const onRemoveFile= (index) => {
+    let files = [...selectedFiles];
+    files.splice(index, 1)
+    setSelectedFiles(files);
   }
 
   return (
@@ -138,10 +140,12 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
         onDragOver={dragOver}
         onDragEnter={dragEnter}
         onDragLeave={dragLeave}
-        onDrop={fileDrop}>
+        onDrop={fileDrop}
+        ref={imgDropZoneRef}
+        >
         <div className="drop-message">
           <img src={Im} />
-          <p>Drag & Drop files here or</p>
+          <p>Drag & Drop files here</p>
         </div>
       </div>
       <div className="file-display-container">
@@ -150,11 +154,12 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
             <div className="file-status-bar" key={i}>
               <div>
                 <div className="file-type-logo"></div>
-                <div className="file-type">{fileType(data.name)}</div>
-                <span className={`file-name ${data.invalid ? 'file-error' : ''}`}>{data.name}</span>
-                <span className="file-size">({fileSize(data.size)})</span> {data.invalid && <span className='file-error-message'>({errorMessage})</span>}
+                <p className={`file-name ${data.invalid ? 'file-error' : ''}`}>
+                  <span>{data.name}</span>
+                  <span className="file-size">({fileSize(data.size)})</span>
+                  <button className="file-remove" onClick={()=>{onRemoveFile(i)}}>X</button>
+                </p>
               </div>
-              <div className="file-remove">X</div>
             </div>
           )
         }

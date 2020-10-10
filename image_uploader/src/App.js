@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import M from 'materialize-css/dist/js/materialize.min.js';
 import "./App.css";
 import DropZone from "./DropZone";
-import axios from 'axios';
 import Preview from './Preview';
 
-
 function App() {
+
+  useEffect(()=> {
+    M.AutoInit();
+  })
+  
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [uploadSuccess, setUploadSuccess] = useState(false);
