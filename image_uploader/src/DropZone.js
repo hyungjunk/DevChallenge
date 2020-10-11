@@ -58,11 +58,8 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
   const handleFiles = files => {
     for (let file of files) {
       if (validateFile(file)) {
-        // add to an array so we can display the name of file
-        // console.log(file)
         setSelectedFiles(prevArray => [...prevArray, file]);
       } else {
-        // set error message
         M.toast({html: 'File type not permitted'})
       }
     }
@@ -136,17 +133,18 @@ const DropZone = ({ selectedFiles, setSelectedFiles, errorMessage, setErrorMessa
 
   return (
     <div className="container" ref={containerRef}>
+      <div className="drop-container-wrapper" ref={imgDropZoneRef}>
       <div className="drop-container"
         onDragOver={dragOver}
         onDragEnter={dragEnter}
         onDragLeave={dragLeave}
         onDrop={fileDrop}
-        ref={imgDropZoneRef}
         >
         <div className="drop-message">
           <img src={Im} />
           <p>Drag & Drop files here</p>
         </div>
+      </div>
       </div>
       <div className="file-display-container">
         {

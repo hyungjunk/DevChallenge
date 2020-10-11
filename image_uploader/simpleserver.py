@@ -6,7 +6,6 @@ app = Flask(__name__)
 CORS(app)
 filename = None
 
-
 @app.route("/", methods=["POST"])
 def index():
     global filename
