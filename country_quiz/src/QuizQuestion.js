@@ -6,8 +6,8 @@ const Styled = styled.p`
   font-weight: 900;
 `;
 
-const QuizQuestion = () => {
-  return <Styled>Kuala Lumpur is the capital of</Styled>;
+const QuizQuestion = ({ sentence }) => {
+  return <Styled>{sentence}</Styled>;
 };
 
 export default QuizQuestion;

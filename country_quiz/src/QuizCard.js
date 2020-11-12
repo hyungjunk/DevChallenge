@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import QuizQuestion from "./QuizQuestion";
 import AnswerChoice from "./AnswerChoice";
+import { useQuestions } from "./hooks/customHooks";
 
 const Styled = styled.div`
   background: white;
@@ -22,15 +23,21 @@ const AnswerContainer = styled.div`
 `;
 
 const QuizCard = () => {
+  const { sentence, choices, answer } = useQuestions();
+  const CHAR_CODE_A = 65;
   return (
     <Styled>
-      <QuizQuestion />
+      <QuizQuestion sentence={sentence} />
       <AnswerContainer>
-        {/* ABCD를 코드화 하려면? */}
-        <AnswerChoice letter={"A"} />
-        <AnswerChoice letter={"B"} />
-        <AnswerChoice letter={"C"} />
-        <AnswerChoice letter={"D"} />
+        {!choices && <h1>Loading...</h1>}
+        {choices?.map((choice, idx) => (
+          <AnswerChoice
+            key={choice}
+            letter={String.fromCharCode(idx + CHAR_CODE_A)}
+            choice={choice}
+            answer={answer}
+          />
+        ))}
       </AnswerContainer>
     </Styled>
   );
