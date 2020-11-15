@@ -35,9 +35,9 @@ export class QuestionMaker {
   askCapital(answerIdx) {
     const choices = this.getRandomItems();
     return {
-      sentence: `${choices[answerIdx].capital} is captial of where?`,
+      sentence: `Where ${choices[answerIdx].capital} is the captial of?`,
       choices: choices.map((choice) => choice.name),
-      answer: choices[answerIdx],
+      answer: choices[answerIdx].name,
     };
   }
 
@@ -53,18 +53,19 @@ export class QuestionMaker {
   }
 
   askFlag(answerIdx) {
-    const choices = this.getRandomItems();
+    const items = this.getRandomItems();
+    const choices = shuffleArray(items);
+    const answer = items[answerIdx].name;
     return {
-      sentence: `${choices[answerIdx].flag} is flag of which country?`,
+      sentence: items[answerIdx].flag,
       choices: choices,
-      answer: choices[answerIdx],
+      answer: answer,
     };
   }
 
   getQuestionAndAnswer() {
     if (!this.countryList) return;
-    // const funcs = [this.askCapital, this.askFlag, this.askRegion];
-    const funcs = [this.askRegion];
+    const funcs = [this.askCapital, this.askFlag, this.askRegion];
     const randomQuestion = funcs[getRandomInt(0, funcs.length, 1)];
     const qu = randomQuestion.bind(this);
     const question = qu(getRandomInt(0, funcs.length, 1));

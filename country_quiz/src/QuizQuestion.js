@@ -6,8 +6,29 @@ const Styled = styled.p`
   font-weight: 900;
 `;
 
+const CountryFlagContainer = styled.div`
+  max-height: 80px;
+`;
+
+const CountryFlag = styled.img`
+  width: 150px;
+  background: lightgrey;
+  padding: 10px;
+`;
+
 const QuizQuestion = ({ sentence }) => {
-  return <Styled>{sentence}</Styled>;
+  const isSVGFile = sentence?.startsWith("https://");
+  if (isSVGFile) {
+    const dom = (
+      <CountryFlagContainer>
+        <CountryFlag src={sentence} />
+        <p>{`Which country is this flag of?`}</p>
+      </CountryFlagContainer>
+    );
+    return dom;
+  } else {
+    return <Styled>{sentence}</Styled>;
+  }
 };
 
 export default QuizQuestion;
