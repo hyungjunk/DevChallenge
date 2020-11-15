@@ -24,11 +24,16 @@ const AnswerContainer = styled.div`
 
 const QuizCard = () => {
   const isAnswerRef = useRef();
+  const sampleRef = useRef();
   const { sentence, choices, answer } = useQuestions();
   const CHAR_CODE_A = 65;
   const handleClick = (e) => {
-    e.target.style.background = "red";
-    isAnswerRef.current.style.background = "green";
+    // e.target.style.background = "red";
+    // isAnswerRef.current.style.background = "green";
+
+    console.log(isAnswerRef.current);
+    console.log(isAnswerRef.current.children);
+    console.log(isAnswerRef.current.children[2].children[0].style.display='block');
   };
 
   // Answer container를 랩핑하는 context provider를 두기
