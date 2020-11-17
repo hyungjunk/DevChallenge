@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { QuestionMaker } from "../util/randomIntGenerator";
 
 export const useQuestions = (round) => {
-  console.log(round);
   const [questionSet, setQuestionSet] = useState({
     sentence: null,
     choices: undefined,
@@ -22,6 +21,12 @@ export const useQuestions = (round) => {
       });
     };
     getCountryList();
+    return () =>
+      setQuestionSet({
+        sentence: null,
+        choices: undefined,
+        answer: null,
+      });
   }, [round]);
   return questionSet;
 };
