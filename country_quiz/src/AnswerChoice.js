@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext } from "react";
+import React, { forwardRef, useContext, useRef } from "react";
 import styled from "styled-components";
 import CorrectSVGIcon from "./assets/correct.svg";
 import WrongSVGIcon from "./assets/wrong.svg";
@@ -16,7 +16,9 @@ const Styled = styled.button`
     color: white;
     cursor: pointer;
   }
-  font-size: ${(props) => (props.isLongText ? "9px" : "13px")};
+  font-size: ${(props) => (props.isLongText ? "7px" : "13px")};
+  background-color: ${(props) =>
+    props.isAnswer && props.context.userHasTried ? "green" : null};
 `;
 
 const StyledLetter = styled.span`
@@ -53,22 +55,31 @@ const AnswerLetter = ({ letter }) => {
   return <StyledLetter>{letter}</StyledLetter>;
 };
 
-const handleClick = (setContext, choice, isAnswer) => {
-  setContext({
+const handleClick = (setContext, choice, isAnswer, DOMref) => {
+  setContext(ctx=>({
+    ...ctx,
     userHasTried: true,
     userSelected: choice,
     isUserCorrect: isAnswer,
-  });
+  }));
+  if (!isAnswer) {
+    DOMref.current.style.background = "red";
+  }
 };
 
-const AnswerChoice = forwardRef((props, ref) => {
+const AnswerChoice = (props) => {
   const [context, setContext] = useContext(AnswerContext);
   const { letter, choice, isAnswer } = props;
+  const DOMref = useRef();
   return (
     <Styled
+      ref={DOMref}
       isLongText={choice.length > 30}
-      onClick={() => handleClick(setContext, choice, isAnswer)}
-      ref={ref}
+      context={context}
+      isAnswer={isAnswer}
+      onClick={() =>
+        handleClick(setContext, choice, isAnswer, DOMref)
+      }
     >
       <AnswerLetter letter={letter} />
       <span>{choice}</span>
@@ -81,6 +92,6 @@ const AnswerChoice = forwardRef((props, ref) => {
       </StyledAnswerMark>
     </Styled>
   );
-});
+};
 
 export default AnswerChoice;

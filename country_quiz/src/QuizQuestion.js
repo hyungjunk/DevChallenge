@@ -11,7 +11,7 @@ const CountryFlagContainer = styled.div`
 `;
 
 const CountryFlag = styled.img`
-  width: 150px;
+  width: 50%;
   background: lightgrey;
   padding: 10px;
 `;

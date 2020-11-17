@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { createContext, useRef, useState } from "react";
 import styled from "styled-components";
 import QuizQuestion from "./QuizQuestion";
 import AnswerChoice from "./AnswerChoice";
@@ -17,50 +11,58 @@ const Styled = styled.div`
   height: 500px;
   border-radius: 30px;
   margin: 20px;
-  padding: 30px;
+  padding: 20px;
 `;
 
 const AnswerContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 100%;
-  padding: 50px 0px;
+  height: 85%;
+  padding: 2em 0px;
+  position: relative;
+`;
+
+const NextBtn = styled.button`
+  position: absolute;
+  border-radius: 30px;
+  bottom: 0px;
+  right: 0px;
+  padding: 0.5em 2em;
+  border: none;
+  background: #f9a826;
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const INITIAL_STATE = {
   userSelected: null,
   answer: null,
   userHasTried: false,
-  isUserCorrect: false
+  isUserCorrect: false,
+  round: 1,
 };
+
 export const AnswerContext = createContext();
 
 const QuizCard = () => {
   const [context, setContext] = useState(INITIAL_STATE);
   const isAnswerRef = useRef();
-  const { sentence, choices, answer } = useQuestions();
+  const { sentence, choices, answer } = useQuestions(context.round);
   const CHAR_CODE_A = 65;
-  const handleClick = (e) => {
-    // e.target.style.background = "red";
-    // isAnswerRef.current.style.background = "green";
-    console.log(isAnswerRef.current);
-    console.log(isAnswerRef.current.children);
-    console.log(
-      (isAnswerRef.current.children[2].children[0].style.display = "block")
-    );
+
+  const handleClick = () => {
+    setContext(ctx=> ({ ...INITIAL_STATE, round: ctx.round+1 }));
   };
 
-  // userSelect에 따라 AnswerChoice 컴포넌트에서는 background color, icon이보이게/안보이게
-  // 이외 많은 것들이 필요없어질수도.
-
-  // FIXME: 굳이 answer 필요없고 isAnswer={choice====answer}로 해버려도 될 듯
   return (
     <Styled>
       <QuizQuestion sentence={sentence} />
       <AnswerContext.Provider value={[context, setContext]}>
         <AnswerContainer>
-          {!choices && <h1>Loading...</h1>}
+          {!choices && <p>Loading...</p>}
           {choices?.map((choice, idx) => (
             <AnswerChoice
               ref={choice === answer ? isAnswerRef : null}
@@ -70,6 +72,9 @@ const QuizCard = () => {
               isAnswer={choice === answer}
             />
           ))}
+          {context.userHasTried && (
+            <NextBtn onClick={handleClick}>Next</NextBtn>
+          )}
         </AnswerContainer>
       </AnswerContext.Provider>
     </Styled>
