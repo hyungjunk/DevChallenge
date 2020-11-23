@@ -8,6 +8,7 @@ export const useQuestions = (round) => {
     answer: null,
   });
   useEffect(() => {
+    if (round === 2) return;
     const getCountryList = async () => {
       const resp = await fetch("https://restcountries.eu/rest/v2/all");
       let countriesAll = await resp.json();
@@ -21,12 +22,13 @@ export const useQuestions = (round) => {
       });
     };
     getCountryList();
-    return () =>
-      setQuestionSet({
+    return () => {
+      return setQuestionSet({
         sentence: null,
         choices: undefined,
         answer: null,
       });
+    };
   }, [round]);
   return questionSet;
 };

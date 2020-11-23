@@ -2,7 +2,6 @@ import React, { forwardRef, useContext, useRef } from "react";
 import styled from "styled-components";
 import CorrectSVGIcon from "./assets/correct.svg";
 import WrongSVGIcon from "./assets/wrong.svg";
-import { AnswerContext } from "./QuizCard";
 
 const Styled = styled.button`
   position: relative;
@@ -15,10 +14,15 @@ const Styled = styled.button`
     background-color: #f9a826;
     color: white;
     cursor: pointer;
+    border: none;
+  }
+  &:click {
+    border: none;
   }
   font-size: ${(props) => (props.isLongText ? "7px" : "13px")};
-  background-color: ${(props) =>
-    props.isAnswer && props.context.userHasTried ? "green" : null};
+  background-color: ${(props) => {
+    return props.isAnswer && props.context.userHasTried ? "green" : null;
+  }};
 `;
 
 const StyledLetter = styled.span`
@@ -55,43 +59,31 @@ const AnswerLetter = ({ letter }) => {
   return <StyledLetter>{letter}</StyledLetter>;
 };
 
-const handleClick = (setContext, choice, isAnswer, DOMref) => {
-  setContext(ctx=>({
-    ...ctx,
-    userHasTried: true,
-    userSelected: choice,
-    isUserCorrect: isAnswer,
-  }));
-  if (!isAnswer) {
-    DOMref.current.style.background = "red";
-  }
-};
-
-const AnswerChoice = (props) => {
-  const [context, setContext] = useContext(AnswerContext);
-  const { letter, choice, isAnswer } = props;
+const AnswerChoice = React.memo((props) => {
+  const { letter, choice, isAnswer, contextSetter, contextValue } = props;
+  const handleClick = () => {
+    contextSetter(choice, isAnswer, DOMref);
+  };
   const DOMref = useRef();
   return (
     <Styled
       ref={DOMref}
       isLongText={choice.length > 30}
-      context={context}
+      context={contextValue}
       isAnswer={isAnswer}
-      onClick={() =>
-        handleClick(setContext, choice, isAnswer, DOMref)
-      }
+      onClick={handleClick}
     >
       <AnswerLetter letter={letter} />
       <span>{choice}</span>
       <StyledAnswerMark>
         <AnswerICON
-          userSelected={context.userSelected === choice}
-          isVisible={context.userHasTried}
+          userSelected={contextValue.userSelected === choice}
+          isVisible={contextValue.userHasTried}
           isAnswer={isAnswer}
         />
       </StyledAnswerMark>
     </Styled>
   );
-};
+});
 
 export default AnswerChoice;
