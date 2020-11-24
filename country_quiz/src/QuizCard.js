@@ -68,18 +68,29 @@ const INITIAL_STATE = {
   userHasTried: false,
   isUserCorrect: false,
   round: 1,
+  maxRound: 5,
+  score: 0,
 };
 
 export const AnswerContext = createContext();
 
-const QuizCard = React.memo(() => {
+const QuizCard = () => {
   const [context, setContext] = useState(INITIAL_STATE);
   const isAnswerRef = useRef();
-  const { sentence, choices, answer } = useQuestions(context.round);
+  const { sentence, choices, answer } = useQuestions(
+    context.round,
+    context.maxRound
+  );
   const CHAR_CODE_A = 65;
 
   const handleClick = () => {
-    setContext((ctx) => ({ ...INITIAL_STATE, round: ctx.round + 1 }));
+    setContext((ctx) => {
+      return {
+        ...INITIAL_STATE,
+        score: ctx.score,
+        round: ctx.round + 1,
+      };
+    });
   };
 
   const handleReset = () => {
@@ -87,25 +98,34 @@ const QuizCard = React.memo(() => {
   };
 
   const contextSetter = useCallback((choice, isAnswer, DOMref) => {
-    setContext((ctx) => ({
-      ...ctx,
-      userHasTried: true,
-      userSelected: choice,
-      isUserCorrect: isAnswer,
-    }));
+    setContext((ctx) => {
+      return {
+        ...ctx,
+        userHasTried: true,
+        userSelected: choice,
+        isUserCorrect: isAnswer,
+        score: isAnswer ? ctx.score + 1 : ctx.score,
+      };
+    });
     if (!isAnswer) {
       DOMref.current.style.background = "red";
     }
   }, []);
 
-  const contextValue = useMemo(() => context, [context]);
+  const contextValue = useMemo(() => context, [
+    context.round,
+    context.userHasTried,
+  ]);
 
   return (
     <Styled>
       <AnswerContext.Provider value={[context, setContext]}>
-        {context.round === 2 ? (
+        {context.round === context.maxRound + 1 ? (
           <TextWrapper>
             <p>You are done!</p>
+            <p>
+              Total Score: {context.score} / {context.maxRound}
+            </p>
             <TryAgainBtn onClick={handleReset}>Try Again</TryAgainBtn>
           </TextWrapper>
         ) : (
@@ -133,6 +153,6 @@ const QuizCard = React.memo(() => {
       </AnswerContext.Provider>
     </Styled>
   );
-});
+};
 
 export default QuizCard;

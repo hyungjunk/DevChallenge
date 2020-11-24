@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext, useRef } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import CorrectSVGIcon from "./assets/correct.svg";
 import WrongSVGIcon from "./assets/wrong.svg";
@@ -36,10 +36,11 @@ const StyledAnswerMark = styled.span`
 `;
 
 const ICONWrapper = styled.div`
-  display: ${(props) =>
-    props.isVisible && (props.userSelected || props.isAnswer)
+  display: ${(props) => {
+    return props.isVisible && (props.userSelected || props.isAnswer)
       ? "block"
-      : "none"};
+      : "none";
+  }};
 `;
 
 const AnswerICON = ({ userSelected, isVisible, isAnswer }) => {
@@ -59,9 +60,10 @@ const AnswerLetter = ({ letter }) => {
   return <StyledLetter>{letter}</StyledLetter>;
 };
 
-const AnswerChoice = React.memo((props) => {
+const AnswerChoice = (props) => {
   const { letter, choice, isAnswer, contextSetter, contextValue } = props;
   const handleClick = () => {
+    if (contextValue.userHasTried) return;
     contextSetter(choice, isAnswer, DOMref);
   };
   const DOMref = useRef();
@@ -84,6 +86,6 @@ const AnswerChoice = React.memo((props) => {
       </StyledAnswerMark>
     </Styled>
   );
-});
+};
 
 export default AnswerChoice;
