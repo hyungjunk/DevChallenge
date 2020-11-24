@@ -4,7 +4,7 @@ import { QuestionMaker } from "../util/randomIntGenerator";
 export const useQuestions = (round, maxRound) => {
   const [questionSet, setQuestionSet] = useState({
     sentence: null,
-    choices: undefined,
+    choices: null,
     answer: null,
   });
   useEffect(() => {
@@ -25,7 +25,7 @@ export const useQuestions = (round, maxRound) => {
     return () => {
       return setQuestionSet({
         sentence: null,
-        choices: undefined,
+        choices: null,
         answer: null,
       });
     };
