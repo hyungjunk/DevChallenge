@@ -4,20 +4,21 @@ import SearchBar from "./components/SearchBar";
 import SearchFilters from "./components/SearchFilters";
 import Content from "./components/Content";
 import JobList from "./components/JobList";
-import { useMedia } from "react-use";
 import { ThemeProvider } from "styled-components";
 import theme from "./style/theme";
+import Container from "./components/Container";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <MainLogo />
-      <SearchBar />
-      <Content>
-        <SearchFilters />
-        <JobList />
-      </Content>
+      <Container>
+        <MainLogo />
+        <SearchBar />
+        <Content>
+          <JobList />
+        </Content>
+      </Container>
     </ThemeProvider>
   );
 }
