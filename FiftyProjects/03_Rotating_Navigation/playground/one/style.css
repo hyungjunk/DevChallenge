@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background-color: #fafafa;
+  /* origin(변화 꼭지점)의 기본값은 content의 정중앙 */
+  transform-origin: top left;
+  transition: transform 0.5s linear;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 50px;
+}
+
+.container.show-nav {
+  transform: rotate(-20deg);
+}
+
+.container.show-nav .circle {
+  transform: rotate(-70deg);
+}
+
+.circle-container {
+  position: fixed;
+  top: -100px;
+  left: -100px;
+}
+
+.circle {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #ff7979;
+  transition: transform 3s linear;
+}
+
+.circle button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 100px;
+  background-color: transparent;
+  border: 0;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.circle button:focus {
+  outline: 0;
+}
+
+.circle button#open {
+  left: 60%;
+}
+
+.circle button#close {
+  top: 60%;
+  transform: rotate(90deg);
+  transform-origin: top left;
+}
+
+.content {
+  margin-top: 70px;
+}
+
+.image {
+  max-width: 100%;
+}

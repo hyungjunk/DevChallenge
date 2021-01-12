@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  margin: 0;
+  overflow-x: hidden;
+  background-color: #333;
+  color: #222;
+}
+
+.container {
+  background-color: #fafafa;
+  /* origin(변화 꼭지점)의 기본값은 content의 정중앙 */
+  transform-origin: top left;
+  transition: transform 0.5s linear;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 50px;
+}
+
+.container.show-nav {
+  transform: rotate(-20deg);
+}
+
+.container.show-nav .circle {
+  transform: rotate(-70deg);
+}
+
+.circle-container {
+  position: fixed;
+  top: -100px;
+  left: -100px;
+}
+
+.circle {
+  background-color: #ff7979;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: relative;
+  transition: transform 0.5s linear;
+}
+
+.circle button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 100px;
+  background: transparent;
+  border: 0;
+  font-size: 26px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.circle button:focus {
+  outline: none;
+}
+
+.circle button#open {
+  left: 60%;
+}
+
+.circle button#close {
+  top: 60%;
+  transform: rotate(90deg);
+  transform-origin: top left;
+}
+
+.content {
+  max-width: 1000px;
+  margin: 50px auto;
+}
+
+.content img {
+  max-width: 100%;
+}
+
+.content small {
+  color: #555;
+  font-style: italic;
+}
+
+.content p {
+  color: #333;
+  line-height: 1.5;
+}
+
+/* 와 이렇게 하면 container의 속성을 검사하는 동시에 nav를 선택할 수 있구나 
++ 버튼은 앞의 요소 바로 뒤에 있는 요소만 선택
+*/
+
+.container.show-nav + nav li {
+  transform: translateX(0);
+  transition-delay: 0.3s;
+}
+
+nav {
+  position: fixed;
+  bottom: 40px;
+  left: 0px;
+}
+
+nav ul {
+  list-style-type: none;
+  color: #ffffff;
+}
+
+nav ul li {
+  text-transform: uppercase;
+  margin: 40px 0;
+  transform: translateX(-100%);
+}
+
+/* Anything after first li */
+nav ul li + li {
+  margin-left: 15px;
+  transform: translateX(-150%);
+}
+
+nav ul li + li + li {
+  margin-left: 30px;
+  transform: translateX(-200%);
+}
+
+nav ul li i {
+  font-size: 20px;
+  margin-right: 10px;
+}
