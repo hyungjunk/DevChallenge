@@ -19,3 +19,8 @@
 ### Blurry Loading
 
 - CSS attr의 값도 동적으로 계산할 수 있다. calc(100% + 50px). 띄어쓰기 조심
+
+
+### form wave animation
+
+- input의 수도연산자에 valid도 있다는 것
