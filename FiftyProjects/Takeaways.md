@@ -24,3 +24,7 @@
 
 - scroll event listener
 - getBoundingClientRect : viewport에서 해당 엘리먼트의 절대위치
+
+### form wave animation
+
+- input의 수도연산자에 valid도 있다는 것
