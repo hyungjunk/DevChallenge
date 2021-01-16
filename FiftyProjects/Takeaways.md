@@ -19,3 +19,8 @@
 ### Blurry Loading
 
 - CSS attr의 값도 동적으로 계산할 수 있다. calc(100% + 50px). 띄어쓰기 조심
+
+### Scroll Animation
+
+- scroll event listener
+- getBoundingClientRect : viewport에서 해당 엘리먼트의 절대위치
