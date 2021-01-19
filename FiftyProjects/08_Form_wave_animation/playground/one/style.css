@@ -13,4 +13,23 @@ body {
   justify-content: center;
   height: 100vh;
   overflow: hidden;
+  font-size: 30px;
+}
+
+.invisible {
+  color: #fff;
+}
+
+span.active:nth-of-type(odd) {
+  display: inline-block;
+  color: blue;
+  transform: translateY(10%);
+  transition-delay: 400ms;
+}
+
+span.active:nth-of-type(even) {
+  display: inline-block;
+  color: red;
+  transform: translateY(-10%);
+  transition-delay: 400ms;
 }

@@ -28,3 +28,8 @@
 ### form wave animation
 
 - input의 수도연산자에 valid도 있다는 것
+- cubic-bezier animation: 자연스러운 bouncing 효과 (https://matthewlein.com/tools/ceaser)
+
+## sound_board
+- [MDN HTML5 audio](https://developer.mozilla.org/ko/docs/Web/HTML/Element/audio)
+- JS로도 play 가능 `document.querySelector(audio).play()`
