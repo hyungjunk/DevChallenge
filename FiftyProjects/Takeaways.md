@@ -33,3 +33,6 @@
 ## sound_board
 - [MDN HTML5 audio](https://developer.mozilla.org/ko/docs/Web/HTML/Element/audio)
 - JS로도 play 가능 `document.querySelector(audio).play()`
+
+## Random Picker
+- 태그들 중 하나의 태그를 highlight 할 때 하나를 하이라이트하고 전체를 unhighlight하는 것으로 생각했는데 단순히 하나를 highlight하고 unhighlight하는 식으로 iterate하면 편하게 구현이 가능. (알고리즘을 이렇게..)
