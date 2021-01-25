@@ -46,7 +46,6 @@ const randomSelect = () => {
       highlightTag(randomTag);
     }, 100);
   }, times * 100);
-  console.log(123);
 };
 
 const pickRandomTag = () => {
