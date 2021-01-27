@@ -36,3 +36,7 @@
 
 ## Random Picker
 - 태그들 중 하나의 태그를 highlight 할 때 하나를 하이라이트하고 전체를 unhighlight하는 것으로 생각했는데 단순히 하나를 highlight하고 unhighlight하는 식으로 iterate하면 편하게 구현이 가능. (알고리즘을 이렇게..)
+
+## Incrementing Counter
+- data- 속성을 쓸 수 있다는 것은 늘 알지만 실제 활용은 덜 하게 되니 참고하며 좋다.
+- updateCounter를 재귀처럼 핸들링 하는 방식

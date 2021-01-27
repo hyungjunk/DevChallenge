@@ -1,15 +1,15 @@
 const counters = document.querySelectorAll(".counter");
-console.log(counters);
-
 counters.forEach((counter) => {
-  console.log(counter.getAttribute("data-target"));
+  const updateCounter = () => {
+    const target = +counter.getAttribute("data-target");
+    const c = +counter.innerText;
+    const increment = target / 200;
+    if (c < target) {
+      counter.innerText = `${Math.ceil(c + increment)}`;
+      setTimeout(updateCounter, 10);
+    } else {
+      counter.innerText = target;
+    }
+  };
+  updateCounter();
 });
-
-// const interval = setInterval(() => {
-//   // console.log(twtCount.innerHTML);
-//   // twtCount.innerHTML++;
-//   twtCount.innerHTML = +twtCount.innerHTML + 10;
-//   if (twtCount.innerText === "3000") {
-//     clearInterval(interval);
-//   }
-// }, 10);
