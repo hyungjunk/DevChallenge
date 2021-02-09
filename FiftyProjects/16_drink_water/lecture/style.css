@@ -96,10 +96,12 @@ h3 {
 .percentage {
   background-color: var(--fill-color);
   font-size: 30px;
-  text-align: center;
   font-weight: bold;
   height: 0;
   transition: 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .text {
