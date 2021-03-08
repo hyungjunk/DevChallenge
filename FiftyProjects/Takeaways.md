@@ -45,3 +45,7 @@
 
 - 태그::attribute로 attribute의 style을 조정할 수 있다. 대표적인 것이 `.my-input::placeholder`가 된다.
 - `letter-spacing` 꽤 힙해보임
+
+### Theme Clock
+
+- transform을 사용할 때 transform의 기준이 되는 중심점(꼭지점)은 center. 이를 변경하고 싶다면 transform-origin 을 조정.
