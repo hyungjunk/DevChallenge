@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 200px;
+        height: 200px;
+        background-color: antiquewhite;
+      }
+      .box-inner {
+        width: 100px;
+        height: 100px;
+        background-color: aquamarine;
+      }
+      .active {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="box-inner">Inner Box</div>
+    </div>
+    <input id="input" type="text" />
+    <ul id="fruits">
+      <li id="apple">apple</li>
+      <li id="banana">banana</li>
+      <li id="orange">orange</li>
+    </ul>
+  </body>
+  <script type="text/javascript" src="dist/purify.min.js"></script>
+  <script>
+    /*
+    1. Sanitize의 필요성
+
+    HTML5에선 naive하게 inject하는 <script/> 태그를 막아주지만
+    아래와 같은 경우엔 안 된다. 이런 것을 처리하기 위해  DOMPurify라는 라이브러리가 있다.
+    */
+    var inject = '<img src="x" onerror="alert(' + "'TADA!~'" + ')">';
+    // document.getElementByID('foo').innerHTML = inject;
+
+    /*
+    2. 반복적인 DOM을 한 번에 업데이트하기
+
+    DOM에 수정을 가하면 Reflow, Repaint가 돌기 때문에 비용이 적지 않은 작업이 된다.
+    따라서 아래처럼 DocumentFragment를 만든 후에 여기 append하고 작업이 끝났을 때 본체(넣고자 하는 element)에 append하면
+    Repaint, Reflow를 한번으로 줄일 수 있다.
+    Fragment는 스르륵 녹아없어지면서 영향을 주지 않기 때문에 container, wrapper가 불필요하게 붙지 않아도 된다는 장점이 있다.
+    */
+    var f = document.createDocumentFragment();
+    ["apple", "banana"].forEach((item) => {
+      var li = document.createElement("li");
+      var liTxt = document.createTextNode(item);
+      li.appendChild(liTxt);
+      f.appendChild(li);
+    });
+    document.getElementById("fruits").appendChild(f);
+
+    /**
+    Event Delegation
+    상위 DOM 항목이 자식에게서 발생한 이벤트를 처리한다.
+    이 방법의 장점은 모든 li태그에 event handler를 등록해줄 필요없이 상위에서 처리하기 때문에
+    관리가 편하고 이벤트핸들러의 갯수도 줄일 수 있다는 것.
+
+    주목해서 볼만한 것은 DOMNode.matches 메서드와 toggle의 2번째 조건에 들어가는 boolean.
+    DOMNode.matches는 어디다 쓸까 했는데 이렇게 Event Delegation을 할 때 유용할 듯하다.
+    **/
+    const fruits = document.querySelector("#fruits");
+    fruits.addEventListener("click", function (e) {
+      console.log(e.target);
+      console.log(e.currentTarget);
+      if (!e.target.matches("#fruits>li")) return;
+      [...fruits.children].forEach((child) => {
+        child.classList.toggle("active", child === e.target);
+      });
+    });
+  </script>
+</html>
