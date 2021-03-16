@@ -49,3 +49,8 @@
 ### Theme Clock
 
 - transform을 사용할 때 transform의 기준이 되는 중심점(꼭지점)은 center. 이를 변경하고 싶다면 transform-origin 을 조정.
+
+### Ripple button
+
+- `text-transform: uppercase`. CSS만으로 대문자 가능
+- `clientX, clientY`만 알았는데 `e.target.offsetTop`을 하면 이벤트가 생긴 Element의 offset 위치도 알 수 있다
