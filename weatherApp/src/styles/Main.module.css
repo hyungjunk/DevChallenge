@@ -1,0 +1,100 @@
+.main {
+    width: 70vw;
+    background: bisque;
+}
+
+.cardWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cards {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.highlight {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.highlightCard {
+    width: 30em;
+    margin: 1em;
+    height: 35%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #1E213A;
+}
+
+.highlightCardTitle {
+    transform: translateY(30px);
+}
+
+.highlightCardBig {
+    width: 30em;
+    margin: 1em;
+    height: 60%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #1E213A;
+}
+
+.highlightCardInfo {
+    font-size: 3em;
+}
+
+.highlightCardSubInfo {
+    font-size: 1.5em;
+}
+
+.highlightCardGraph {
+    height: 0.5em;
+    width: 20em;
+    background: white;
+    z-index: 2;
+    border-radius: 1em;
+}
+
+.highlightCardGraph::before {
+    content: '0';
+    position: relative;
+    top: -2em;
+    left: 0;
+}
+
+.highlightCardGraph::after {
+    content: '100';
+    position: relative;
+    top: -2em;
+    left: 18em;
+}
+
+.highlightCardGraphInner {
+    position: absolute;
+    background: yellow;
+    height: 0.5em;
+    border-radius: 1em;
+    transform: translateY(-24px);
+}
+
+.weatherCard {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #1E213A;
+    text-align: center;
+    padding: 1em 0em;
+}

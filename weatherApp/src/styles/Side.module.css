@@ -1,0 +1,116 @@
+.side {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30vw;
+    height: 100vh;
+    background: #1E213A;
+}
+
+.searchSideBar {
+    position: absolute;
+    width: 23vw;
+    height: 100%;
+    background: #1E213A;
+    z-index: 1;
+}
+
+.searchHeaderWrapper {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1em;
+}
+
+.searchHeaderWrapper button {
+    border: none;
+    border-radius: 1em;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.selectableCityWrapper{
+    text-align: center;
+}
+
+.selectableCity {
+    width: 90%;
+    height: 3em;
+    margin-bottom: 1em;
+    background: transparent;
+    border: 1px solid #616475;
+}
+
+.selectableCity:hover {
+    cursor: pointer;
+}
+
+.searchPlaceBtn {
+    background: #6E707A;
+    height: 40px;
+    width: 161px;
+    left: 46px;
+    top: 42px;
+    border-radius: 0px;
+}
+
+.geoBtn {
+    height: 3em;
+    width: 3em;
+    border-radius: 50%;
+    background-color: #6E707A;
+    background-image: url("/assets/current.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.weatherIcon {
+    display: flex;
+    justify-content: center;
+    flex: 2;
+}
+
+.celciusNumber {
+    height: 169px;
+    width: 192px;
+    left: 124px;
+    top: 512px;
+    font-size: 96px;
+}
+
+.weatherStatus {
+    text-align: center;
+}
+
+.weatherStatusFooter {
+    text-align: center;
+}
+
+
+.closeBtn {
+    position: relative;
+    left: 85%;
+    font-size: 2em;
+    height: 2rem;
+    color: white;
+    background-color: transparent;
+    border: none;
+    margin-bottom: 1em;
+}
+
+.searchInputWrapper {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2em;
+}
+
+.searchInput {
+
+}
+
+.searchBtn {
+    background: #3C47E9;
+    color: white;
+    border: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    height: 3em;
+}
