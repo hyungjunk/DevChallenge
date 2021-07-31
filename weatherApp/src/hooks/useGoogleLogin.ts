@@ -10,7 +10,6 @@ export function useGoogleLogin(loginBtnRef) {
     window.googleSDKLoaded = () => {
       window.gapi.load("auth2", () => {
         const auth2 = window.gapi.auth2.getAuthInstance();
-        console.log(auth2);
         //버튼 클릭시 사용자 정보 불러오기
         auth2?.attachClickHandler(
           loginBtnRef.current,
