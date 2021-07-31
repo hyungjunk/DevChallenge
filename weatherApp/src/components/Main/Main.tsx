@@ -2,24 +2,23 @@ import styles from "../../styles/Main.module.css";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import HighlightCard from "./HighlightCard/HighlightCard";
 import { HIGHLIGHT_CARD_TYPE } from "../../constants";
-import { observer } from "mobx-react";
-import { store } from "../../stores/ObservableDataStore";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import is from "@sindresorhus/is";
 import { dateHelper } from "../../helpers/dates";
 import { Weather } from "../../../pages/api/weather/model";
+import { useStore } from "../../stores/storeContext";
+import { observer } from "mobx-react";
 
-interface MainProps {
-  children?: ReactNode;
-}
-
-const Main = observer((props: MainProps) => {
+// observer
+const Main = observer(() => {
   const [foreWeathers, setForeWeathers] = useState([]);
+  const { appStore } = useStore();
+
   useEffect(() => {
     const fetchForeWeathers = async () => {
-      if (is.falsy(store.currentCity?.cityName)) return;
-      const [lat, lng] = store.currentCity.latlng.split(",");
+      if (is.falsy(appStore.currentCity?.cityName)) return;
+      const [lat, lng] = appStore.currentCity.latlng.split(",");
       const result = await axios.get(
         `/api/weather/forecast?lat=${lat}&lng=${lng}`,
       );
@@ -27,7 +26,8 @@ const Main = observer((props: MainProps) => {
     };
     fetchForeWeathers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [store.currentCity]);
+  }, [appStore.currentCity]);
+
   return (
     <div className={styles.cardWrapper}>
       <div className={styles.cards}>
@@ -52,23 +52,23 @@ const Main = observer((props: MainProps) => {
           <HighlightCard
             title={HIGHLIGHT_CARD_TYPE.WIND}
             info={{
-              speed: store.weather?.wind?.speed || 0,
-              degree: store.weather?.wind?.deg || 0,
+              speed: appStore.weather?.wind?.speed || 0,
+              degree: appStore.weather?.wind?.deg || 0,
             }}
           />
           <HighlightCard
             title={HIGHLIGHT_CARD_TYPE.AIRPRESSURE}
-            info={store.weather?.main?.pressure || 0}
+            info={appStore.weather?.main?.pressure || 0}
           />
         </div>
         <div>
           <HighlightCard
             title={HIGHLIGHT_CARD_TYPE.HUMIDITY}
-            info={store.weather?.main?.humidity || 0}
+            info={appStore.weather?.main?.humidity || 0}
           />
           <HighlightCard
             title={HIGHLIGHT_CARD_TYPE.VISIBILITY}
-            info={store.weather?.visibility || 0}
+            info={appStore.weather?.visibility || 0}
           />
         </div>
       </div>

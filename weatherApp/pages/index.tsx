@@ -1,24 +1,21 @@
-import { observer } from "mobx-react";
-import { store } from "../src/stores/ObservableDataStore";
 import Main from "../src/components/Main/Main";
-import { useEffect } from "react";
 import Layout from "../src/components/Layout";
 import Side from "../src/components/Side/Side";
+import AuthRequired from "../src/components/Auth/AuthRequired";
+import { RootStoreProvider } from "../src/stores/storeContext";
 
-declare const navigator: Navigator;
-
-const Home = observer((props) => {
-  useEffect(() => {
-    store.initiate(navigator).then();
-  }, []);
-
+const Home = () => {
   return (
-    <Layout>
-      <Side />
-      <Main />
-    </Layout>
+    <RootStoreProvider>
+      <AuthRequired>
+        <Layout>
+          <Side />
+          <Main />
+        </Layout>
+      </AuthRequired>
+    </RootStoreProvider>
   );
-});
+};
 
 export async function getServerSideProps({ preview = false }) {
   console.log("getServerSideProps");

@@ -3,7 +3,6 @@ import SearchInput from "./SearchInput/SearchInput";
 import { Dispatch, SetStateAction } from "react";
 import SelectableCityBox from "./SelectableCityBox/SelectableCityBox";
 import CloseButton from "./CloseButton/CloseButton";
-import { store } from "../../../stores/ObservableDataStore";
 
 export const SearchSideBar = ({
   isSidebarOpen,

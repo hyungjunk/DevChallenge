@@ -20,7 +20,6 @@ const SearchInput = (_) => {
             `/api/weather/search?keyword=${currentKeyword}`,
           );
           const { data } = await result.json();
-          console.log(data);
           store.selectableCities = data;
         }}
       >

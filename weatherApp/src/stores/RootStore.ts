@@ -5,18 +5,32 @@ import { FetchImpl } from "../protocol/Fetcher";
 import is from "@sindresorhus/is";
 import { autobind } from "../helpers/autobind";
 
+interface ChildStore {
+  init: () => void;
+}
+
+export class RootStore {
+  appStore: ObservableDataStore;
+  authStore: AuthStore;
+
+  constructor() {
+    this.appStore = new ObservableDataStore(this);
+    this.authStore = new AuthStore(this);
+  }
+}
+
 // TODO(FUTURE): rootStore 패턴 적용
 // https://dev.to/ivandotv/mobx-root-store-pattern-with-react-hooks-318d
 // 참고: https://github.com/mobxjs/mobx/tree/main/packages/mobx-react#server-side-rendering-with-enablestaticrendering
 enableStaticRendering(typeof window === "undefined");
 
-export class ObservableDataStore {
+export class ObservableDataStore implements ChildStore {
   _selectableCities: City[] = [];
   _currentCity?: City;
   _defaultCity?: City;
   _weather?: Weather;
 
-  constructor(private fetcher = new FetchImpl()) {
+  constructor(private rootStore: RootStore, private fetcher = new FetchImpl()) {
     makeObservable(this, {
       _selectableCities: observable,
       _currentCity: observable,
@@ -30,6 +44,8 @@ export class ObservableDataStore {
     });
     // makeAutoObservable(this);
   }
+
+  init() {}
 
   get selectableCities() {
     return this._selectableCities;
@@ -89,7 +105,6 @@ export class ObservableDataStore {
 
   @autobind
   private async setCurrentLocation(position: Position) {
-    console.log(this);
     const response = await this.fetcher.get(
       `/api/coord?latlng=${position.coords.latitude},${position.coords.longitude}`,
     );
@@ -114,7 +129,48 @@ export class ObservableDataStore {
   }
 }
 
-export const store = new ObservableDataStore();
+class User {}
+
+class AuthStore implements ChildStore {
+  _user?: User | null = null;
+
+  constructor(private rootStore: any) {
+    this.rootStore = rootStore;
+    makeObservable(this, {
+      _user: observable,
+    });
+  }
+
+  init() {
+    // this.user = new User();
+  }
+
+  login(user) {
+    this._user = user;
+    window.localStorage.setItem("glogin", "yes");
+  }
+
+  logout() {
+    this._user = null;
+    const auth2 = window.gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log("User signed out.");
+    });
+    window.localStorage.removeItem("glogin");
+  }
+
+  get user() {
+    return this._user;
+  }
+
+  set user(user) {
+    this._user = user;
+  }
+
+  get isLoggedIn() {
+    return this._user != null;
+  }
+}
 
 type City = {
   cityName: string;
@@ -127,8 +183,3 @@ type Position = {
     longitude: number;
   };
 };
-
-class AuthStore {
-  //
-  constructor(private rootStore: any) {}
-}

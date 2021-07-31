@@ -3,10 +3,10 @@ import SearchHeader from "./SearchHeader/SearchHeader";
 import WeatherStatus from "./WeatherStatus/WeatherStatus";
 import React, { Dispatch, SetStateAction } from "react";
 import { observer } from "mobx-react";
-import { store } from "../../../stores/ObservableDataStore";
 import { useCelcius } from "../../../hooks/useCelcius";
 import WeatherIcon from "./WeatherIcon/WeatherIcon";
 import { ImageFill } from "../../Images/ImageFill";
+import { useStore } from "../../../stores/storeContext";
 
 export const DefaultSideBar = observer(
   ({
@@ -14,7 +14,8 @@ export const DefaultSideBar = observer(
   }: {
     setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
   }) => {
-    const weatherReadable = store.weather?.weather?.[0]?.main || "";
+    const { appStore } = useStore();
+    const weatherReadable = appStore.weather?.weather?.[0]?.main || "";
     const { isCelcius, setIsCelcius } = useCelcius();
     return (
       <div className={styles.side}>

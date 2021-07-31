@@ -63,6 +63,13 @@
     background-repeat: no-repeat;
 }
 
+.logout {
+    height: 3em;
+    width: 3em;
+    border-radius: 50%;
+    background-color: #6E707A;
+}
+
 .weatherIcon {
     display: flex;
     justify-content: center;

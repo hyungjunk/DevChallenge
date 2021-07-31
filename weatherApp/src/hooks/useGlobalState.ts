@@ -7,9 +7,9 @@ let listeners = [];
 let globalState = {};
 
 const setState = (newState) => {
-  globalState = { ...globalState, ...newState };
+  state = { ...globalState, ...newState };
   listeners.forEach((listener) => {
-    listener(newState);
+    listener(state);
   });
 };
 

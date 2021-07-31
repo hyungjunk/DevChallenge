@@ -1,21 +1,21 @@
 import React from "react";
-import { observer } from "mobx-react";
 import styles from "../../../../styles/Side.module.css";
-import { store } from "../../../../stores/ObservableDataStore";
+import { useStore } from "../../../../stores/storeContext";
 
-const SelectableCityBox = observer((props) => {
+const SelectableCityBox: React.FC = () => {
+  const { appStore } = useStore();
   return (
     <div className={styles.selectableCityWrapper}>
-      {store.selectableCities?.map((city) => {
+      {appStore.selectableCities?.map((city) => {
         return (
           <button
             className={styles.selectableCity}
             key={city.cityName}
             onClick={() => {
-              const currentCity = store.selectableCities.find(
+              const currentCity = appStore.selectableCities.find(
                 (cityStored) => cityStored.cityName === city.cityName,
               );
-              store.currentCity = currentCity!;
+              appStore.currentCity = currentCity!;
             }}
           >
             {city.cityName}
@@ -24,6 +24,6 @@ const SelectableCityBox = observer((props) => {
       })}
     </div>
   );
-});
+};
 
 export default SelectableCityBox;

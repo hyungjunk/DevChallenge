@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { SearchSideBar } from "./SearchSideBar";
 import { DefaultSideBar } from "./DefaultSideBar";
-import { observer } from "mobx-react";
 
-const Side = observer(() => {
+const Side = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <>
@@ -14,6 +13,6 @@ const Side = observer(() => {
       <DefaultSideBar setIsSidebarOpen={setIsSidebarOpen} />
     </>
   );
-});
+};
 
 export default Side;
