@@ -1,24 +1,25 @@
 import React from "react";
 import Script from "next/script";
+import { PreloadConfig, SupportVendors } from "../../pages";
 
 interface PreloaderProps {
-  configs: {
-    google: {
-      enableLogin: boolean;
-      strategy?: "afterInteractive" | "lazyOnload" | "beforeInteractive";
-    };
-  };
+  configs: PreloadConfig;
 }
 
 const Preloader: React.FC<PreloaderProps> = ({ configs, children }) => {
-  console.log(configs.google.strategy);
   return (
     <>
-      <Script
-        src="https://apis.google.com/js/platform.js"
-        strategy={configs.google.strategy}
-        onLoad={() => console.log("loa!d")}
-      />
+      {Object.keys(configs).map((config) => {
+        const cnf = configs[config as SupportVendors];
+        return (
+          <Script
+            key={cnf.src}
+            src={cnf.src}
+            strategy={cnf.strategy ?? "afterInteractive"}
+            onLoad={cnf.onload}
+          />
+        );
+      })}
       {children}
     </>
   );

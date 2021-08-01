@@ -7,11 +7,10 @@ const AuthRequired: React.FC = observer(({ children }) => {
   const { authStore } = useStore();
   const isLoggedIn = useRef(false);
   useEffect(() => {
-    authStore.init();
     const hasLoggedin = window.localStorage.getItem("glogin");
     if (hasLoggedin === "yes") {
       isLoggedIn.current = true;
-      authStore.login("y");
+      authStore.login("USER MODEL");
     }
   }, [isLoggedIn.current]);
 

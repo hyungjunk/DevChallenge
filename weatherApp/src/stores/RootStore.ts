@@ -5,26 +5,25 @@ import { FetchImpl } from "../protocol/Fetcher";
 import is from "@sindresorhus/is";
 import { autobind } from "../helpers/autobind";
 
+declare const window: any;
+
 interface ChildStore {
   init: () => void;
 }
 
 export class RootStore {
-  appStore: ObservableDataStore;
+  appStore: AppStore;
   authStore: AuthStore;
 
   constructor() {
-    this.appStore = new ObservableDataStore(this);
+    this.appStore = new AppStore(this);
     this.authStore = new AuthStore(this);
   }
 }
 
-// TODO(FUTURE): rootStore 패턴 적용
-// https://dev.to/ivandotv/mobx-root-store-pattern-with-react-hooks-318d
-// 참고: https://github.com/mobxjs/mobx/tree/main/packages/mobx-react#server-side-rendering-with-enablestaticrendering
 enableStaticRendering(typeof window === "undefined");
 
-export class ObservableDataStore implements ChildStore {
+export class AppStore implements ChildStore {
   _selectableCities: City[] = [];
   _currentCity?: City;
   _defaultCity?: City;
@@ -52,7 +51,6 @@ export class ObservableDataStore implements ChildStore {
   }
 
   set selectableCities(cities: City[]) {
-    console.log("setter");
     this._selectableCities = cities;
   }
 
@@ -141,11 +139,9 @@ class AuthStore implements ChildStore {
     });
   }
 
-  init() {
-    // this.user = new User();
-  }
+  init() {}
 
-  login(user) {
+  login(user: User) {
     this._user = user;
     window.localStorage.setItem("glogin", "yes");
   }
