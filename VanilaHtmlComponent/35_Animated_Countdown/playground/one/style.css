@@ -15,3 +15,79 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.numbers {
+  position: relative;
+  overflow: hidden;
+  width: 5rem;
+  height: 5rem;
+}
+
+.numbers span {
+  position: absolute;
+  font-size: 5rem;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%) rotate(120deg);
+  transform-origin: bottom center;
+}
+
+.numbers span.in {
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: goIn .5s ease-in-out;
+}
+
+.numbers span.out {
+  transform: translate(-50%, -50%) rotate(-120deg);
+  animation: goOut .5s ease-in-out;
+}
+
+.starter {
+  font-size: 5rem;
+}
+
+.starter.hide{
+  opacity: 0;
+}
+
+.starter.show{
+  opacity: 1;
+  font-size: 5rem;
+  animation: show .5s ease;
+}
+
+@keyframes goIn {
+  0% {
+    transform: translate(-50%, -50%) rotate(120deg);
+  }
+
+  70% {
+    transform: translate(-50%, -50%) rotate(-20deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+@keyframes goOut {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(-120deg);
+  }
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+    transform:  rotate(-540deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+}
+
