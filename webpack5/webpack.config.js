@@ -3,22 +3,29 @@ const path = require('path');
 module.exports = {
     entry: './src/index.js',
     output: {
-        path: path.resolve(__dirname, './dist'),
-        filename: 'bundle.js',
-
-        // trailing slash is important
-        // if publicPath is not specified, it will be an auto in webpack 5
-        // you can change publicPath if you want to use a CDN
-        publicPath: './dist/'
+        path: path.resolve(__dirname, 'dist'),
+        filename: process.env.NODE_ENV === 'production' ? 'production.js' : 'development.js',
+        // publicPath: './dist/'
     },
-    mode: 'none',
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     module: {
-        // specifying how to import file with designated extension.
-        // this means that webpack will iterate each rule whenever it encounters an import statement.
         rules: [
             {
-                test:/\.(png|jpg|gif)$/,
-                type: 'asset/resource'
+                test: /\.(jpg|png|gif)/,
+                type: 'asset',
+                // parser를 정의하지 않고 그냥 type을 asset으로 두면 8kb를 경계로 그 이상이면 resource / 이하면 inline으로.
+                parser: {
+                    dataUrlCondition: {
+                        // 리소스가 4mb 이상이면 resource (외부 URL로), 그보다 작으면 inline Data URI를 만듬. 
+                        // (byte 단위)
+                        maxSize: 4 * 1024
+                    }
+                }
+            },
+            // source는 string으로 다루게 된다.
+            {
+                test: /\.(txt|py)/,
+                type:'asset/source'
             }
         ]
     }

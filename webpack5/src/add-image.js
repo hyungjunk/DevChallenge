@@ -1,10 +1,10 @@
-import man from './man.jpg';
+import man from "./man.jpg";
+import altText from './sampletext.txt'
 
-function addImage() {
-  const img = document.createElement('img');
+export default function addDummyImageOnDocumentBody() {
+    const img = document.createElement('img');
+    img.alt = altText;
     img.src = man;
-    img.alt = 'Random image';
-  const body = document.querySelector('body');
-  body.appendChild(img);
+    document.body.appendChild(img);
 }
-export default addImage;
+
