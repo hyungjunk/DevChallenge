@@ -26,6 +26,30 @@ module.exports = {
             {
                 test: /\.(txt|py)/,
                 type:'asset/source'
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader', 'css-loader'
+                ]
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    // 오른쪽부터 loader가 적용됨에 주의할 것.
+                    'style-loader', 'css-loader', 'sass-loader'
+                ]
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/env'],
+                        plugins: ['@babel/plugin-proposal-class-properties']
+                    }
+                }
             }
         ]
     }
