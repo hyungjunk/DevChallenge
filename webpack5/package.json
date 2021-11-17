@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "webpack serve --node-env=development --config webpack.config.js",
-    "start": "rm -rf dist && webpack --node-env=development && webpack serve --live-reload --node-env=development"
+    "build": "rm -rf dist && webpack --node-env=development",
+    "start": "webpack serve --node-env=development"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
