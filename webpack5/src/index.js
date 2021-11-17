@@ -1,4 +1,14 @@
-import HelloworldButton from './components/helloworld-button.js'
+import { addLocalImage } from "./components/add-local-image";
+import { addLogo } from "./components/add-logo";
+import { addImage } from "./components/add-url-image";
 
-const helloworldBtn = new HelloworldButton();
-helloworldBtn.render();
+function helloworld() {
+  console.log('hello world');
+}
+
+console.log('how to clear cache?');
+console.log('bing bing')
+helloworld();
+addImage();
+addLogo();
+addLocalImage();

@@ -3,19 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "dev": "webpack serve --node-env=development --config webpack.config.js",
+    "start": "rm -rf dist && webpack --node-env=development && webpack serve --live-reload --node-env=development"
+  },
   "devDependencies": {
     "@babel/core": "^7.16.0",
-    "@babel/plugin-proposal-class-properties": "^7.16.0",
-    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
     "babel-loader": "^8.2.3",
-    "css-loader": "^6.5.1",
-    "sass": "^1.43.4",
-    "sass-loader": "^12.3.0",
-    "style-loader": "^3.3.1",
-    "webpack": "^5.63.0",
-    "webpack-cli": "^4.9.1"
-  },
-  "scripts": {
-    "build": "rm -rf dist && webpack --stats --progress --node-env=production"
+    "file-loader": "^6.2.0",
+    "terser-webpack-plugin": "^5.2.5",
+    "webpack": "^5.64.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.5.0"
   }
 }
