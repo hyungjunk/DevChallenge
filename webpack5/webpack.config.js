@@ -39,12 +39,18 @@ module.exports = {
         }
       },
       {
-        test: /\.scss$/,
+        test: /\.css$/,
         use: [
             // 오른쪽부터 loader가 적용됨에 주의할 것.
-            'style-loader', 'css-loader', 'sass-loader'
+            MiniCssExtractPlugin.loader, 'css-loader'
         ]
-    },
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'
+        ]
+      },
     ]
   },
   devServer: {
