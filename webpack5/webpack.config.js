@@ -1,10 +1,11 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: './src/index.js',
   mode: process.env.NODE_ENV ?? 'production',
   output: {
-    filename: 'bundle.js',
+    filename: 'bundle.[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/dist/',
     // publicPath를 제거하니 bundle을 정상적으로 찾음.
@@ -50,5 +51,10 @@ module.exports = {
     },
     port: 3000,
     liveReload: true
-  }
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'style.[contenthash].css'
+    })
+  ]
 };
