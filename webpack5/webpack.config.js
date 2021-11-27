@@ -1,6 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -8,7 +9,7 @@ module.exports = {
   output: {
     filename: 'bundle.[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/dist/',
+    publicPath: '',
     // publicPath를 제거하니 bundle을 정상적으로 찾음.
     // 신기한 건 브라우저에서 모두 bundle.js를 찾는데.. 
     // dev-server hot reload도 정상작동. 이 옵션에 대해 더 알아보자.
@@ -59,6 +60,7 @@ module.exports = {
     }),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['**/*', path.join(process.cwd(), 'build/**')],
-    })
+    }),
+    new HtmlWebpackPlugin()
   ]
 };
