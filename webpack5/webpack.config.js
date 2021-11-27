@@ -9,10 +9,13 @@ module.exports = {
   output: {
     filename: 'bundle.[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '',
     // publicPath를 제거하니 bundle을 정상적으로 찾음.
     // 신기한 건 브라우저에서 모두 bundle.js를 찾는데.. 
     // dev-server hot reload도 정상작동. 이 옵션에 대해 더 알아보자.
+    
+    // HtmlWebpackPlugin에서 import할 script, link의 prefix로 쓰임
+    publicPath: '../',
+    
   },
   module: {
     rules: [
@@ -67,6 +70,12 @@ module.exports = {
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['**/*', path.join(process.cwd(), 'build/**')],
     }),
-    new HtmlWebpackPlugin()
+    new HtmlWebpackPlugin({
+      title: 'Webpack is Awesome',
+      filename: 'subfolder/custom_index.html',
+      meta: {
+        description: 'Description created by webpack configuration'
+      }
+    })
   ]
 };
