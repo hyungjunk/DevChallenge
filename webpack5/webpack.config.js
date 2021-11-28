@@ -2,6 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
   entry: './src/index.js',
@@ -14,7 +15,7 @@ module.exports = {
     // dev-server hot reload도 정상작동. 이 옵션에 대해 더 알아보자.
     
     // HtmlWebpackPlugin에서 import할 script, link의 prefix로 쓰임
-    publicPath: '../',
+    publicPath: './',
     
   },
   module: {
@@ -42,19 +43,21 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
+        test: /\.s?css$/,
         use: [
             // 오른쪽부터 loader가 적용됨에 주의할 것.
-            MiniCssExtractPlugin.loader, 'css-loader'
-        ]
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'
+            MiniCssExtractPlugin.loader, 'css-loader','sass-loader'
         ]
       },
     ]
+  },
+  optimization: {
+    minimizer: [
+      // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
+      `...`,
+      new CssMinimizerPlugin(),
+    ],
+    minimize: true
   },
   devServer: {
     static: {
@@ -72,10 +75,10 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       title: 'Webpack is Awesome',
-      filename: 'subfolder/custom_index.html',
+      filename: 'index.html',
       meta: {
         description: 'Description created by webpack configuration'
       }
-    })
+    }),
   ]
 };
