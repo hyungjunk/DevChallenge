@@ -3,7 +3,7 @@ import './scss/add-text.scss';
 function createTextElement() {
     const text = document.createElement('h1');
     text.classList.add('title');
-    text.innerText = 'Hello World';
+    text.innerText = 'Webpack--';
     return text;
 }
 

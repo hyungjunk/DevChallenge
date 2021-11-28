@@ -6,7 +6,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
   entry: './src/index.js',
-  mode: process.env.NODE_ENV ? 'production' : 'development',
+  mode: 'production',
   output: {
     filename: 'bundle.[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
@@ -58,13 +58,6 @@ module.exports = {
       new CssMinimizerPlugin(),
     ],
     minimize: true
-  },
-  devServer: {
-    static: {
-      directory: './',
-    },
-    port: 3000,
-    liveReload: true
   },
   plugins: [
     new MiniCssExtractPlugin({

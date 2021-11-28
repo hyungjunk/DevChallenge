@@ -1,14 +1,12 @@
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
   entry: './src/index.js',
-  mode: process.env.NODE_ENV ? 'production' : 'development',
+  mode: 'development',
   output: {
-    filename: 'bundle.[contenthash].js',
+    filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
     // publicPath를 제거하니 bundle을 정상적으로 찾음.
     // 신기한 건 브라우저에서 모두 bundle.js를 찾는데.. 
@@ -46,30 +44,24 @@ module.exports = {
         test: /\.s?css$/,
         use: [
             // 오른쪽부터 loader가 적용됨에 주의할 것.
-            MiniCssExtractPlugin.loader, 'css-loader','sass-loader'
+            'style-loader', 'css-loader','sass-loader'
         ]
       },
     ]
   },
-  optimization: {
-    minimizer: [
-      // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
-      `...`,
-      new CssMinimizerPlugin(),
-    ],
-    minimize: true
-  },
   devServer: {
-    static: {
-      directory: './',
+    static: { // what exactly should be served
+      // directory:  path.resolve(__dirname, 'dist')
+      directory:  './dist'
     },
     port: 3000,
+    devMiddleware: {
+      index:'index.html',
+      writeToDisk: true,  // unless memory에 생성되고 파일로는 생성 안되기 때문에 헷갈린다.
+    },
     liveReload: true
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'style.[contenthash].css'
-    }),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['**/*', path.join(process.cwd(), 'build/**')],
     }),
