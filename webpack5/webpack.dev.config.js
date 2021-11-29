@@ -3,10 +3,13 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    'diablo': './src/diablo.js',
+    'index': './src/index.js', 
+  },
   mode: 'development',
   output: {
-    filename: 'bundle.js',
+    filename: 'bundle.[name].js',
     path: path.resolve(__dirname, 'dist'),
     // publicPath를 제거하니 bundle을 정상적으로 찾음.
     // 신기한 건 브라우저에서 모두 bundle.js를 찾는데.. 

@@ -5,10 +5,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    'index': './src/index.js', 
+    'diablo': './src/diablo.js'
+  },
   mode: 'production',
   output: {
-    filename: 'bundle.[contenthash].js',
+    filename: 'bundle.[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
     // publicPath를 제거하니 bundle을 정상적으로 찾음.
     // 신기한 건 브라우저에서 모두 bundle.js를 찾는데.. 
@@ -60,18 +63,25 @@ module.exports = {
     minimize: true
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'style.[contenthash].css'
-    }),
+    new MiniCssExtractPlugin(),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['**/*', path.join(process.cwd(), 'build/**')],
     }),
     new HtmlWebpackPlugin({
-      title: 'Webpack is Awesome',
       filename: 'index.html',
+      chunks: ['index'],
+      title: 'Index',
       meta: {
         description: 'Description created by webpack configuration'
-      }
+      },
+      minify: false
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'diablo.html',
+      chunks: ['diablo'],
+      title: 'Diabloe',
+      description: 'Description created by webpack configuration',
+      minify: false
     }),
   ]
 };
