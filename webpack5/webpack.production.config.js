@@ -41,7 +41,7 @@ module.exports = {
           dataUrlCondition: {
               // 리소스가 4mb 이상이면 resource (외부 URL로), 그보다 작으면 inline Data URI를 만듬. 
               // (byte 단위)
-              maxSize: 4 * 1024 * 100
+              maxSize: 4 * 1024
           }
         }
       },
@@ -55,6 +55,9 @@ module.exports = {
     ]
   },
   optimization: {
+    splitChunks: {
+      chunks: 'all', // which chunk should be optimized? 
+    },
     minimizer: [
       // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
       `...`,
@@ -78,6 +81,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       filename: 'diablo.html',
+      // chunk name should be same as property key in entry
       chunks: ['diablo'],
       title: 'Diablo',
       description: 'Description created by webpack configuration',
