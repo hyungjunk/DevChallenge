@@ -10,11 +10,7 @@ module.exports = {
   output: {
     filename: 'bundle.[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
-    // publicPath를 제거하니 bundle을 정상적으로 찾음.
-    // 신기한 건 브라우저에서 모두 bundle.js를 찾는데.. 
-    // dev-server hot reload도 정상작동. 이 옵션에 대해 더 알아보자.
-    
-    // HtmlWebpackPlugin에서 import할 script, link의 prefix로 쓰임
+    // HtmlWebpackPlugin에서 import할 리소스의 prefix로 쓰임
     publicPath: './',
     
   },

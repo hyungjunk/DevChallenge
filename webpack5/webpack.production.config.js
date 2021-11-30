@@ -79,7 +79,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'diablo.html',
       chunks: ['diablo'],
-      title: 'Diabloe',
+      title: 'Diablo',
       description: 'Description created by webpack configuration',
       minify: false
     }),
