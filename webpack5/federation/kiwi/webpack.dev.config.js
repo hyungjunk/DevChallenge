@@ -1,7 +1,7 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {ModuleFederationPlugin} = require('webpack').container;
+const { ModuleFederationPlugin } = require('webpack').container;
 
 module.exports = {
     entry: './src/kiwi.js',
@@ -61,8 +61,13 @@ module.exports = {
             name: 'KiwiApp',
             // remote로 사용(consume)할 remote application을 지정
             remotes: {
-                HelloworldApp: 'HelloWorldApp@http://localhost:9001/remoteEntry.js',
+                HelloWorldApp: 'HelloWorldApp@http://localhost:9001/remoteEntry.js',
             }
-        })
-    ]
+        }),
+    ],
+
+    // federation에서 expose 된 app을 await import('App')식으로 사용하기 위해서는 현재 필요한 옵션
+    experiments: {
+        topLevelAwait: true,
+    },
 };
