@@ -12,6 +12,6 @@ app.get('/', function (req, res) {
 
 app.use('/static', express.static(path.resolve(__dirname, '../dist')));
 
-app.listen(3000, function () {
-    console.log('Application is running on http://localhost:3000');
+app.listen(9002, function () {
+    console.log('Application is running on http://localhost:9002');
 });

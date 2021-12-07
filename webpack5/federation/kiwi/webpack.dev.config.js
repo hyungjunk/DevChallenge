@@ -8,13 +8,13 @@ module.exports = {
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, './dist'),
-        publicPath: ''
+        publicPath: 'http://localhost:9002/'
     },
     mode: 'development',
     devServer: {
         contentBase: path.resolve(__dirname, './dist'),
         index: 'kiwi.html',
-        port: 9000
+        port: 9002
     },
     module: {
         rules: [
@@ -57,5 +57,12 @@ module.exports = {
             description: 'Kiwi',
             template: 'src/page-template.hbs'
         }),
+        new ModuleFederationPlugin({
+            name: 'KiwiApp',
+            // remote로 사용(consume)할 remote application을 지정
+            remotes: {
+                HelloworldApp: 'HelloWorldApp@http://localhost:9001/remoteEntry.js',
+            }
+        })
     ]
 };
